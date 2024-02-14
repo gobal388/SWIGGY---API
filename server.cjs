@@ -39,6 +39,7 @@ app.post('/add-restaturant',async function(req,res){
            "avgRating" :req.body.avgRating,
            "costForTwo":req.body.costForTwo,
            "cuisines":req.body.cuisines,
+           "imageLink":req.body.imageLink,
            "name":req.body.name
         })
 
@@ -61,6 +62,7 @@ app.get('/get-res-details',async function (req,res) {
         })
     }
 })
+
 
 app.delete('/delete-restaurant/:id',async function(req,res) {
     try {
