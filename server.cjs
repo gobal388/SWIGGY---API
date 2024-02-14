@@ -1,7 +1,8 @@
 const express=require('express')
 const bodyparser= require('body-parser')
-const mongoose= require('mongoose')
 const cors =require('cors')
+const mongoose= require('mongoose')
+
 
 const {Restaurant,Users}=require('./Schema.cjs')
 
@@ -27,6 +28,8 @@ async function connectToDb() {
 connectToDb()
 //add-res:post
 //get-res-details:get
+//update-res:patech
+//delete-res:delete
 //creat-new -user:post
 //validate-user:post
 app.post('/add-restaturant',async function(req,res){
@@ -56,6 +59,27 @@ app.get('/get-res-details',async function (req,res) {
             "satus":"no details found",
             "error":error
         })
+    }
+})
+
+app.delete('/delete-restaurant/:id',async function(req,res) {
+    try {
+        const restaurant = await Restaurant.findById(req.params.id)
+        if(restaurant){
+            await restaurant.findByIdAndDelete(req.params.id)
+            res.status(201).json({"Message":"Successfully Deleted"})
+        }
+        else{
+            res.status(404).json({
+                "status":"failure",
+                "messge":"Give valid id"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            "Status":"can not be Delete",
+            "error":error
+    })
     }
 })
 
